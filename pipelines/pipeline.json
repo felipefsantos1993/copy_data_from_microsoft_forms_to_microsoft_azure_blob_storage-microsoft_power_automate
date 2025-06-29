@@ -1,0 +1,60 @@
+{
+    "name": "pipeline1",
+    "properties": {
+        "activities": [
+            {
+                "name": "FORMULARIO_001",
+                "type": "DatabricksNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "Set variable",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": []
+            },
+            {
+                "name": "Set variable",
+                "type": "SetVariable",
+                "dependsOn": [],
+                "policy": {
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "id_resposta",
+                    "value": {
+                        "value": "@pipeline().parameters.formParam",
+                        "type": "Expression"
+                    }
+                }
+            }
+        ],
+        "parameters": {
+            "formParam": {
+                "type": "string"
+            }
+        },
+        "variables": {
+            "id_resposta": {
+                "type": "String"
+            }
+        },
+        "folder": {
+            "name": "FORMS"
+        },
+        "annotations": [],
+        "lastPublishTime": "2025-06-25T14:43:29Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
